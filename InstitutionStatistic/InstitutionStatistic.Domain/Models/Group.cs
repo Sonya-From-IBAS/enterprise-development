@@ -1,4 +1,5 @@
 ﻿using InstitutionStatistic.Domain.Models.BaseModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InstitutionStatistic.Domain.Models;
 
@@ -10,6 +11,7 @@ public class Group(Department department, Speciality speciality) : Entity
     /// <summary>
     /// Номер группы
     /// </summary>
+    [Column("number")]
     required public string Number { get; set; }
 
     /// <summary>

@@ -1,4 +1,5 @@
 ﻿using InstitutionStatistic.Domain.Models.BaseModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InstitutionStatistic.Domain.Models;
 
@@ -10,6 +11,7 @@ public class Speciality() : EntityWithName
     /// <summary>
     /// Код спцеаильности
     /// </summary>
+    [Column("code")]
     required public string Code { get; init; }
 
     /// <summary>
