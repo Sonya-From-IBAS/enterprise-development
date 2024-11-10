@@ -19,10 +19,34 @@ public class TestBase
     {
 
         #region Rectors
-        var rector1 = new Rector(ScientificDegree.Candidate, AcademicRank.AssociateProfessor) { Id = Guid.NewGuid(), Version = DateTime.Now, FullName = "Иванов A.Ю" };
-        var rector2 = new Rector(ScientificDegree.Doctor, AcademicRank.Professor) { Id = Guid.NewGuid(), Version = DateTime.Now, FullName = "Петров В.А" };
-        var rector3 = new Rector(ScientificDegree.Candidate, AcademicRank.AssociateProfessor) { Id = Guid.NewGuid(), Version = DateTime.Now, FullName = "Сидоров Н.П" };
-        var rector4 = new Rector(ScientificDegree.Doctor, AcademicRank.Professor) { Id = Guid.NewGuid(), Version = DateTime.Now, FullName = "Бобров А.М" };
+        var rector1 = new Rector {
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            FullName = "Иванов A.Ю", 
+            Degree = ScientificDegree.Candidate, 
+            Rank = AcademicRank.AssociateProfessor 
+        };
+        var rector2 = new Rector { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            FullName = "Петров В.А",
+            Degree = ScientificDegree.Doctor,
+            Rank = AcademicRank.Professor
+        };
+        var rector3 = new Rector { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            FullName = "Сидоров Н.П",
+            Degree = ScientificDegree.Candidate,
+            Rank = AcademicRank.AssociateProfessor
+        };
+        var rector4 = new Rector { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            FullName = "Бобров А.М",
+            Degree = ScientificDegree.Doctor,
+            Rank = AcademicRank.Professor
+        };
         #endregion
 
         #region Faculties
@@ -52,54 +76,178 @@ public class TestBase
         #endregion
 
         #region Groups
-        var group1 = new Group(department1, speciality1) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "6412-100503" };
-        var group2 = new Group(department2, speciality2) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "6411-100503" };
-        var group3 = new Group(department2, speciality3) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "6413-100503" };
+        var group1 = new Group {
+            Id = Guid.NewGuid(),
+            Version = DateTime.Now,
+            Number = "6412-100503",
+            Department = department1,
+            Speciality = speciality1
+        };
+        var group2 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "6411-100503",
+            Department = department2,
+            Speciality = speciality2
+        };
+        var group3 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "6413-100503",
+            Department = department2,
+            Speciality = speciality3
+        };
 
 
-        var group4 = new Group(department3, speciality1) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "6414-100503" };
-        var group5 = new Group(department3, speciality2) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "5101-100503" };
-        var group6 = new Group(department3, speciality3) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "5102-100503" };
-        var group7 = new Group(department3, speciality4) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "5103-100503" };
-        var group8 = new Group(department3, speciality1) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "5104-100503" };
+        var group4 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "6414-100503",
+            Department = department3,
+            Speciality = speciality1
+        };
+        var group5 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "5101-100503",
+            Department = department3,
+            Speciality = speciality2
+        };
+        var group6 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "5102-100503",
+            Department = department3,
+            Speciality = speciality3
+        };
+        var group7 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "5103-100503",
+            Department = department3,
+            Speciality = speciality4
+        };
+        var group8 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "5104-100503",
+            Department = department3,
+            Speciality = speciality1
+        };
 
-        var group9 = new Group(department4, speciality1) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "3221-100503" };
-        var group10 = new Group(department4, speciality2) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "3222-100503" };
-        var group11 = new Group(department4, speciality3) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "3223-100503" };
-        var group12 = new Group(department5, speciality4) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "3223-100503" };
-        var group13 = new Group(department5, speciality4) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "7405-100503" };
+        var group9 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "3221-100503",
+            Department = department4,
+            Speciality = speciality1
+        };
+        var group10 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "3222-100503",
+            Department = department4,
+            Speciality = speciality2
+        };
+        var group11 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "3223-100503",
+            Department = department4,
+            Speciality = speciality3
+        };
+        var group12 = new Group { 
+            Id = Guid.NewGuid(),
+            Version  = DateTime.Now, 
+            Number = "3223-100503",
+            Department = department5,
+            Speciality = speciality4
+        };
+        var group13 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "7405-100503",
+            Department = department5,
+            Speciality = speciality4
+        };
 
-        var group14 = new Group(department6, speciality3) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "7406-100503" };
-        var group15 = new Group(department6, speciality2) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "7407-100503" };
-        var group16 = new Group(department6, speciality4) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "7408-100503" };
 
-        var group17 = new Group(department6, speciality5) { Id = Guid.NewGuid(), Version = DateTime.Now, Number = "7409-100503" };
+        var group14 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "7406-100503",
+            Department = department6,
+            Speciality = speciality3
+        };
+        var group15 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "7407-100503",
+            Department = department6,
+            Speciality = speciality2
+        };
+        var group16 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "7408-100503",
+            Department = department6,
+            Speciality = speciality4
+        };
+
+
+        var group17 = new Group { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Number = "7409-100503",
+            Department = department6,
+            Speciality = speciality5
+        };
         #endregion
 
         #region Institutions
-        var inst1 = new Institution(
-            rector1,
-            BuildingOwnership.Federal,
-            InstitutionOwnership.Municipality)
-        { Id = Guid.NewGuid(), Version = DateTime.Now, Name = "СГАУ", RegistrationNumber = "test register1", Address = "test address1" };
+        var inst1 = new Institution {
+            Id = Guid.NewGuid(),
+            Version = DateTime.Now,
+            Name = "СГАУ",
+            RegistrationNumber = "test register1",
+            Address = "test address1",
+            Rector = rector1,
+            BuildingOwnership = BuildingOwnership.Federal,
+            InstitutionOwnership = InstitutionOwnership.Municipality
+        };
 
-        var inst2 = new Institution(
-            rector2,
-            BuildingOwnership.Municipality,
-            InstitutionOwnership.Municipality)
-        { Id = Guid.NewGuid(), Version = DateTime.Now, Name = "САМГТУ", RegistrationNumber = "test register2", Address = "test address2" };
+        var inst2 = new Institution { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Name = "САМГТУ", 
+            RegistrationNumber = "test register2", 
+            Address = "test address2",
+            Rector = rector2,
+            BuildingOwnership = BuildingOwnership.Municipality,
+            InstitutionOwnership = InstitutionOwnership.Municipality
+        };
 
-        var inst3 = new Institution(
-            rector3,
-            BuildingOwnership.Personal,
-            InstitutionOwnership.Personal)
-        { Id = Guid.NewGuid(), Version = DateTime.Now, Name = "ПГУТИ", RegistrationNumber = "test register3", Address = "test address3" };
+        var inst3 = new Institution { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Name = "ПГУТИ", 
+            RegistrationNumber = "test register3", 
+            Address = "test address3",
+            Rector = rector3,
+            BuildingOwnership = BuildingOwnership.Personal,
+            InstitutionOwnership = InstitutionOwnership.Personal
+        };
 
-        var inst4 = new Institution(
-            rector4,
-            BuildingOwnership.Federal,
-            InstitutionOwnership.Personal)
-        { Id = Guid.NewGuid(), Version = DateTime.Now, Name = "САМГМУ", RegistrationNumber = "test register4", Address = "test address4" };
+        var inst4 = new Institution { 
+            Id = Guid.NewGuid(), 
+            Version = DateTime.Now, 
+            Name = "САМГМУ", 
+            RegistrationNumber = "test register4", 
+            Address = "test address4",
+            Rector = rector4,
+            BuildingOwnership = BuildingOwnership.Federal,
+            InstitutionOwnership = InstitutionOwnership.Personal
+        };
         #endregion
 
         #region initAllValues
@@ -177,7 +325,7 @@ public class TestBase
 
         faclt5.Departments.Add(department6);
 
-        department6.Faculty = faclt4;
+        department6.Faculty = faclt5;
 
         department6.Groups.Add(group14);
         department6.Groups.Add(group15);

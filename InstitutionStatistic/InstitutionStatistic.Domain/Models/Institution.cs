@@ -7,10 +7,8 @@ namespace InstitutionStatistic.Domain.Models;
 /// <summary>
 /// Реализация сущности институт
 /// </summary>
-public class Institution(
-        Rector rector,
-        BuildingOwnership buildingOwnership,
-        InstitutionOwnership institutionOwnership) : EntityWithName
+ [Table("institution")]
+public class Institution : EntityWithName
 {
     /// <summary>
     /// Регистрационный номер
@@ -27,7 +25,7 @@ public class Institution(
     /// <summary>
     /// Ректор
     /// </summary>
-    public virtual Rector? Rector { get; set; } = rector;
+    public virtual Rector? Rector { get; set; }
 
     /// <summary>
     /// Факультеты
@@ -38,11 +36,11 @@ public class Institution(
     /// Собственность зданий
     /// </summary>
     [Column("building_ownership")]
-    public BuildingOwnership? BuildingOwnership { get; set; } = buildingOwnership;
+    public BuildingOwnership? BuildingOwnership { get; set; }
 
     /// <summary>
     /// Собственность учреждения
     /// </summary>
     [Column("institution_ownership")]
-    public InstitutionOwnership? InstitutionOwnership { get; set; } = institutionOwnership;
+    public InstitutionOwnership? InstitutionOwnership { get; set; }
 }

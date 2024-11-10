@@ -6,7 +6,8 @@ namespace InstitutionStatistic.Domain.Models;
 /// <summary>
 /// Реализация сущности специальность
 /// </summary>
-public class Speciality() : EntityWithName
+[Table("speciality")]
+public class Speciality : EntityWithName
 {
     /// <summary>
     /// Код спцеаильности

@@ -6,7 +6,8 @@ namespace InstitutionStatistic.Domain.Models;
 /// <summary>
 /// Реализация сущности группа
 /// </summary>
-public class Group(Department department, Speciality speciality) : Entity
+[Table("group")]
+public class Group : Entity
 {
     /// <summary>
     /// Номер группы
@@ -17,11 +18,11 @@ public class Group(Department department, Speciality speciality) : Entity
     /// <summary>
     /// Кафедра
     /// </summary>
-    public virtual Department? Department { get; set; } = department;
+    public virtual Department? Department { get; set; }
 
     /// <summary>
     /// Специальность
     /// </summary>
-    public virtual Speciality Speciality { get; set; } = speciality;
+    public virtual Speciality? Speciality { get; set; }
 
 }

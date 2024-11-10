@@ -7,9 +7,8 @@ namespace InstitutionStatistic.Domain.Models;
 /// <summary>
 /// Реализация ректора
 /// </summary>
-public class Rector(
-        ScientificDegree scientificDegree,
-        AcademicRank academicRank) : Entity
+[Table("rector")]
+public class Rector : Entity
 {
     /// <summary>
     /// ФИО
@@ -21,12 +20,12 @@ public class Rector(
     /// Научная степень
     /// </summary>
     [Column("degree")]
-    public ScientificDegree? Degree { get; set; } = scientificDegree;
+    public ScientificDegree? Degree { get; set; }
 
     /// <summary>
     /// Звание
     /// </summary>
     [Column("rank")]
-    public AcademicRank? Rank { get; set; } = academicRank;
+    public AcademicRank? Rank { get; set; }
 
 }
