@@ -29,15 +29,31 @@ public class InstitutionDbContext(DbContextOptions<InstitutionDbContext> options
             .HasMany(x => x.Departments)
             .WithOne(x => x.Faculty);
 
+        modelBuilder.Entity<Faculty>()
+            .HasOne(x => x.Institution)
+            .WithMany(x => x.Faculties);
+
         //маппинг Department
         modelBuilder.Entity<Department>()
             .HasMany(x => x.Groups)
             .WithOne(x => x.Department);
+
+        modelBuilder.Entity<Department>()
+            .HasOne(x => x.Faculty)
+            .WithMany(x => x.Departments);
 
         //маппинг Group
         modelBuilder.Entity<Group>()
             .HasOne(x => x.Speciality)
             .WithMany(x => x.Groups);
 
+        modelBuilder.Entity<Group>()
+            .HasOne(x => x.Department)
+            .WithMany(x => x.Groups);
+
+        //маппинг Speciality
+        modelBuilder.Entity<Speciality>()
+            .HasMany(x => x.Groups)
+            .WithOne(x => x.Speciality);
     }
 }
