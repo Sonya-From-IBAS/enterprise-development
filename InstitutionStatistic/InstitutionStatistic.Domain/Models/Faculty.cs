@@ -1,10 +1,12 @@
 ﻿using InstitutionStatistic.Domain.Models.BaseModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InstitutionStatistic.Domain.Models;
 
 /// <summary>
 /// Реализация сущности факультет
 /// </summary>
+[Table("faculty")]
 public class Faculty : EntityWithName
 {
 
