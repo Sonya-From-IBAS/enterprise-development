@@ -1,15 +1,17 @@
-﻿using InstitutionStatistic.WebApi.Services;
+﻿using InstitutionStatistic.Domain.Models;
+using InstitutionStatistic.WebApi.Repository;
+using InstitutionStatistic.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstitutionStatistic.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class SpecialityController: ControllerBase
+public class SpecialityController: BaseController<Speciality>
 {
     private ISpecialityService _specialityService;
 
-    public SpecialityController(ISpecialityService specialityService)
+    public SpecialityController(ISpecialityService specialityService, IRepository<Speciality> specialityRepository): base(specialityRepository)
     {
         _specialityService = specialityService;
     }

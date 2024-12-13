@@ -1,6 +1,4 @@
-﻿using InstitutionStatistic.Domain.Models.BaseModel;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace InstitutionStatistic.WebApi.Repository;
 
@@ -19,28 +17,35 @@ public class Repository<TEntity>: IRepository<TEntity> where TEntity : class
         return _dbSet.AsQueryable();
     }
 
-    public Task AddAsync(TEntity entity)
+    public async Task AddAsync(TEntity entity)
     {
-        throw new NotImplementedException();
+        await _dbSet.AddAsync(entity);
+        await _context.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var entity = await GetByIdAsync(id);
+        if (entity != null)
+        {
+            _dbSet.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public Task<TEntity> GetByIdAsync(int id)
+    public async Task<TEntity> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _dbSet.FindAsync(id);
     }
 
-    public Task<TEntity> GetByNameASync(int id)
+    public async Task<TEntity> GetByNameASync(string name)
     {
-        throw new NotImplementedException();
+        return await _dbSet.FirstOrDefaultAsync(e => EF.Property<string>(e, "Name") == name);
     }
 
-    public Task UpdateAsync(TEntity entity)
+    public async Task UpdateAsync(TEntity entity)
     {
-        throw new NotImplementedException();
+        _dbSet.Update(entity);
+        await _context.SaveChangesAsync();
     }
 }
