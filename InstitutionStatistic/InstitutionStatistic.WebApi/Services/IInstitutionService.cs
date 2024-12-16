@@ -10,13 +10,13 @@ public interface IInstitutionService
     Task<List<SpecialityVO>> GetInstitutionSpecialities(string institutionName);
     Task<List<InstitutionVO>> GetMaxDepartmentInstitutions();
     Task<List<InstitutionVO>> GetInstitutions(InstitutionOwnership institutionOwnership, int groupsCount);
-    int GetFacultiesCountByOwnership(
+    Task<int> GetFacultiesCountByOwnership(
         InstitutionOwnership institutionOwnership,
         BuildingOwnership buildingOwnership);
-    int GetDepartmentsCountByOwnership(
+    Task<int> GetDepartmentsCountByOwnership(
         InstitutionOwnership institutionOwnership,
         BuildingOwnership buildingOwnership);
-    int GetSpecialitiesCountByOwnership(
+    Task<int> GetSpecialitiesCountByOwnership(
         InstitutionOwnership institutionOwnership,
         BuildingOwnership buildingOwnership);
 }

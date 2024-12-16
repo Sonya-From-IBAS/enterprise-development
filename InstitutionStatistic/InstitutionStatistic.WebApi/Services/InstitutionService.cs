@@ -2,7 +2,6 @@
 using InstitutionStatistic.Domain.Models;
 using InstitutionStatistic.WebApi.Repository;
 using InstitutionStatistic.WebApi.ViewObjects;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstitutionStatistic.WebApi.Services;
@@ -129,17 +128,50 @@ public class InstitutionService : IInstitutionService
         return result;
     }
 
-    public int GetSpecialitiesCountByOwnership(InstitutionOwnership institutionOwnership, BuildingOwnership buildingOwnership)
+    public async Task<int> GetSpecialitiesCountByOwnership(InstitutionOwnership institutionOwnership, BuildingOwnership buildingOwnership)
     {
-        throw new NotImplementedException();
+        var query = _institutionRepository.Query();
+
+        var result = await query
+            .Include(x => x.Faculties)
+            .ThenInclude(x => x.Departments)
+            .ThenInclude(x => x.Groups)
+            .ThenInclude(x => x.Speciality)
+            .Where(x => x.InstitutionOwnership == institutionOwnership)
+            .Where(x => x.BuildingOwnership == buildingOwnership)
+            .SelectMany(x => x.Faculties)
+            .SelectMany(faculty => faculty.Departments)
+            .SelectMany(department => department.Groups)
+            .Select(group => group.Speciality.Name)
+            .Distinct()
+            .CountAsync();
+
+        return result;
     }
-    public int GetDepartmentsCountByOwnership(InstitutionOwnership institutionOwnership, BuildingOwnership buildingOwnership)
+    public async Task<int> GetDepartmentsCountByOwnership(InstitutionOwnership institutionOwnership, BuildingOwnership buildingOwnership)
     {
-        throw new NotImplementedException();
+        var query = _institutionRepository.Query();
+
+        var result = await query
+            .Include(x => x.Faculties)
+            .ThenInclude(x => x.Departments)
+            .Where(x => x.InstitutionOwnership == institutionOwnership)
+            .Where(x => x.BuildingOwnership == buildingOwnership)
+            .SumAsync(x => x.Faculties.Sum(y => y.Departments.Count));
+
+        return result;
     }
 
-    public int GetFacultiesCountByOwnership(InstitutionOwnership institutionOwnership, BuildingOwnership buildingOwnership)
+    public async Task<int> GetFacultiesCountByOwnership(InstitutionOwnership institutionOwnership, BuildingOwnership buildingOwnership)
     {
-        throw new NotImplementedException();
+        var query = _institutionRepository.Query();
+
+        var result = await query
+            .Include(x => x.Faculties)
+            .Where(x => x.InstitutionOwnership == institutionOwnership)
+            .Where(x => x.BuildingOwnership == buildingOwnership)
+            .SumAsync(x => x.Faculties.Count);
+
+        return result;
     }
 }

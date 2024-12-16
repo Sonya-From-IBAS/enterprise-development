@@ -89,15 +89,12 @@ public class InstitutionController: BaseController<Institution>
     /// <param name="buildingOwnership"></param>
     /// <returns></returns>
     [HttpGet("GetFacultiesCountByOwnership")]
-    public async ActionResult<int> GetFacultiesCountByOwnership(
+    public async Task<ActionResult<int>> GetFacultiesCountByOwnership(
         InstitutionOwnership institutionOwnership,
         BuildingOwnership buildingOwnership)
     {
-        var result = await _institutionService
-        return Repository
-            .Where(x => x.InstitutionOwnership == institutionOwnership)
-            .Where(x => x.BuildingOwnership == buildingOwnership)
-            .Sum(x => x.Faculties.Count);
+        var result = await _institutionService.GetFacultiesCountByOwnership(institutionOwnership, buildingOwnership);
+        return Ok(result);
     }
 
     /// <summary>
@@ -107,14 +104,12 @@ public class InstitutionController: BaseController<Institution>
     /// <param name="buildingOwnership"></param>
     /// <returns></returns>
     [HttpGet("GetDepartmentsCountByOwnership")]
-    public ActionResult<int> GetDepartmentsCountByOwnership(
+    public async Task<ActionResult<int>> GetDepartmentsCountByOwnership(
         InstitutionOwnership institutionOwnership,
         BuildingOwnership buildingOwnership)
     {
-        return Repository
-             .Where(x => x.InstitutionOwnership == institutionOwnership)
-             .Where(x => x.BuildingOwnership == buildingOwnership)
-             .Sum(x => x.Faculties.Sum(y => y.Departments.Count));
+        var result = await _institutionService.GetDepartmentsCountByOwnership(institutionOwnership, buildingOwnership);
+        return Ok(result);
     }
 
     /// <summary>
@@ -124,20 +119,11 @@ public class InstitutionController: BaseController<Institution>
     /// <param name="buildingOwnership"></param>
     /// <returns></returns>
     [HttpGet("GetSpecialitiesCountByOwnership")]
-    public ActionResult<int> GetSpecialitiesCountByOwnership(
+    public async Task<ActionResult<int>> GetSpecialitiesCountByOwnership(
         InstitutionOwnership institutionOwnership,
         BuildingOwnership buildingOwnership)
     {
-        return Repository
-            .Where(x => x.InstitutionOwnership == institutionOwnership)
-            .Where(x => x.BuildingOwnership == buildingOwnership)
-            .SelectMany(x => x.Faculties)
-            .SelectMany(faculty => faculty.Departments)
-            .SelectMany(department => department.Groups)
-            .Select(group => group.Speciality.Name)
-            .Distinct()
-            .Count();
+        var result = await _institutionService.GetSpecialitiesCountByOwnership(institutionOwnership, buildingOwnership);
+        return Ok(result);
     }
-
-
 }
