@@ -18,7 +18,8 @@ public class InstitutionDbContext(DbContextOptions<InstitutionDbContext> options
         //маппиг Institution
         modelBuilder.Entity<Institution>()
             .HasOne(x => x.Rector)
-            .WithMany();
+            .WithMany()
+            .HasForeignKey("rector_id");
 
         modelBuilder.Entity<Institution>()
             .HasMany(x => x.Faculties)
@@ -31,7 +32,8 @@ public class InstitutionDbContext(DbContextOptions<InstitutionDbContext> options
 
         modelBuilder.Entity<Faculty>()
             .HasOne(x => x.Institution)
-            .WithMany(x => x.Faculties);
+            .WithMany(x => x.Faculties)
+            .HasForeignKey("institution_id");
 
         //маппинг Department
         modelBuilder.Entity<Department>()
@@ -40,16 +42,20 @@ public class InstitutionDbContext(DbContextOptions<InstitutionDbContext> options
 
         modelBuilder.Entity<Department>()
             .HasOne(x => x.Faculty)
-            .WithMany(x => x.Departments);
+            .WithMany(x => x.Departments)
+            .HasForeignKey("faculty_id");
 
         //маппинг Group
         modelBuilder.Entity<Group>()
             .HasOne(x => x.Speciality)
-            .WithMany(x => x.Groups);
+            .WithMany(x => x.Groups)
+            .HasForeignKey("speciality_id");
+
 
         modelBuilder.Entity<Group>()
             .HasOne(x => x.Department)
-            .WithMany(x => x.Groups);
+            .WithMany(x => x.Groups)
+            .HasForeignKey("department_id");
 
         //маппинг Speciality
         modelBuilder.Entity<Speciality>()

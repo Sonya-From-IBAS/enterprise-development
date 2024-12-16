@@ -1,6 +1,8 @@
-﻿namespace InstitutionStatistic.WebApi.Services;
+﻿using InstitutionStatistic.WebApi.ViewObjects;
+
+namespace InstitutionStatistic.WebApi.Services;
 
 public interface ISpecialityService
-{
-    Task Test();
+{ 
+    Task<List<SpecialityVO>> GetTopFive();
 }

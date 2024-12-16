@@ -23,6 +23,7 @@ public class Group : Entity
     /// <summary>
     /// Специальность
     /// </summary>
+    [Column("speciality_id")]
     public virtual Speciality? Speciality { get; set; }
 
 }

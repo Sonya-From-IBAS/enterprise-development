@@ -12,5 +12,7 @@ public class IoC
         Services.AddScoped<ISpecialityService, SpecialityService>();
         Services.AddScoped<IRepository<Institution>, Repository<Institution>>();
         Services.AddScoped<IRepository<Speciality>, Repository<Speciality>>();
+        Services.AddScoped<IRepository<Faculty>, Repository<Faculty>>();
+        Services.AddScoped<IRepository<Department>, Repository<Department>>();
     }
 }

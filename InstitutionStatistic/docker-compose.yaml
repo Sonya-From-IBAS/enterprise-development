@@ -33,17 +33,4 @@ services:
     restart: unless-stopped
     container_name: app
 
-  migration:
-    container_name: migrations
-    image: mcr.microsoft.com/dotnet/sdk:8.0
-    volumes:
-      - ./InstitutionStatistic.WebApi/Migrations:/app
-      - ./Commands:/app/Commands
-    working_dir: /app
-    restart: unless-stopped
-    depends_on:
-      db:
-        condition: service_healthy
-    entrypoint: ["/bin/bash", "Commands/commands.sh"] 
-
 
