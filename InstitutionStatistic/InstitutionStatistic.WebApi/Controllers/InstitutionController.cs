@@ -1,4 +1,5 @@
-﻿using InstitutionStatistic.Domain.Enums;
+﻿using AutoMapper;
+using InstitutionStatistic.Domain.Enums;
 using InstitutionStatistic.Domain.Models;
 using InstitutionStatistic.WebApi.Repository;
 using InstitutionStatistic.WebApi.Services;
@@ -8,12 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace InstitutionStatistic.WebApi.Controllers;
 
 
-public class InstitutionController: BaseController<Institution>
+public class InstitutionController: BaseController<Institution, InstitutionVO>
 {
     private IInstitutionService _institutionService;
     public InstitutionController(
         IRepository<Institution> institutionRepository, 
-        IInstitutionService institutionService) : base(institutionRepository)
+        IInstitutionService institutionService,
+        IMapper mapper) : base(institutionService, mapper)
     {
         _institutionService = institutionService;
     }

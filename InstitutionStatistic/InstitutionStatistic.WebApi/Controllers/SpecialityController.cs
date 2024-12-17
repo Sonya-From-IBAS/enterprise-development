@@ -1,4 +1,5 @@
-﻿using InstitutionStatistic.Domain.Models;
+﻿using AutoMapper;
+using InstitutionStatistic.Domain.Models;
 using InstitutionStatistic.WebApi.Repository;
 using InstitutionStatistic.WebApi.Services;
 using InstitutionStatistic.WebApi.ViewObjects;
@@ -6,11 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstitutionStatistic.WebApi.Controllers;
 
-public class SpecialityController: BaseController<Speciality>
+public class SpecialityController: BaseController<Speciality, SpecialityVO>
 {
     private ISpecialityService _specialityService;
 
-    public SpecialityController(ISpecialityService specialityService, IRepository<Speciality> specialityRepository): base(specialityRepository)
+    public SpecialityController(
+        ISpecialityService specialityService, 
+        IRepository<Speciality> specialityRepository
+        , IMapper mapper) : base(specialityRepository, mapper)
     {
         _specialityService = specialityService;
     }

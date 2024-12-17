@@ -23,7 +23,7 @@ public class Repository<TEntity>: IRepository<TEntity> where TEntity : class
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(Guid id)
     {
         var entity = await GetByIdAsync(id);
         if (entity != null)
@@ -33,9 +33,14 @@ public class Repository<TEntity>: IRepository<TEntity> where TEntity : class
         }
     }
 
-    public async Task<TEntity> GetByIdAsync(int id)
+    public async Task<TEntity> GetByIdAsync(Guid id)
     {
         return await _dbSet.FindAsync(id);
+    }
+
+    public async Task<List<TEntity>> GetAllAsync()
+    {
+        return await _dbSet.ToListAsync();
     }
 
     public async Task<TEntity> GetByNameASync(string name)
