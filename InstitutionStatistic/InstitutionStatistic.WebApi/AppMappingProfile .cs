@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using InstitutionStatistic.Domain.Models;
-using InstitutionStatistic.Domain.Models.BaseModel;
 using InstitutionStatistic.WebApi.ViewObjects;
 
 namespace InstitutionStatistic.WebApi;

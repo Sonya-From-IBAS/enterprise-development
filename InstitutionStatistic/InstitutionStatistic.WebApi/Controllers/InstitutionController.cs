@@ -15,7 +15,7 @@ public class InstitutionController: BaseController<Institution, InstitutionVO>
     public InstitutionController(
         IRepository<Institution> institutionRepository, 
         IInstitutionService institutionService,
-        IMapper mapper) : base(institutionService, mapper)
+        IMapper mapper) : base(institutionRepository, mapper)
     {
         _institutionService = institutionService;
     }
