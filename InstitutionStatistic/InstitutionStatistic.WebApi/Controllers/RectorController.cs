@@ -5,10 +5,7 @@ using InstitutionStatistic.WebApi.ViewObjects;
 
 namespace InstitutionStatistic.WebApi.Controllers;
 
-public class RectorController: BaseController<Rector, RectorVO>
+public class RectorController(IRepository<Rector> repository, IMapper mapper) : BaseController<Rector, RectorVO>(repository, mapper)
 {
-    public RectorController(IRepository<Rector> repository, IMapper mapper) : base(repository, mapper)
-    {
 
-    }
 }

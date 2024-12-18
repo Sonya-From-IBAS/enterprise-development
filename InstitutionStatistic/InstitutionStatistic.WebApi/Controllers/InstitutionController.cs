@@ -9,16 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace InstitutionStatistic.WebApi.Controllers;
 
 
-public class InstitutionController: BaseController<Institution, InstitutionVO>
-{
-    private IInstitutionService _institutionService;
-    public InstitutionController(
-        IRepository<Institution> institutionRepository, 
+public class InstitutionController(IRepository<Institution> institutionRepository,
         IInstitutionService institutionService,
-        IMapper mapper) : base(institutionRepository, mapper)
-    {
-        _institutionService = institutionService;
-    }
+        IMapper mapper) : BaseController<Institution, InstitutionVO>(institutionRepository, mapper)
+{
 
     /// <summary>
     /// Вывести информацию о факультетах данного института
@@ -28,7 +22,7 @@ public class InstitutionController: BaseController<Institution, InstitutionVO>
     [HttpGet("GetInstitutionFaculties")]
     public async Task<ActionResult<List<FacultyVO>>> GetInstitutionFaculties(string institutionName)
     {
-        var result = await _institutionService.GetInstitutionFaculties(institutionName);
+        var result = await institutionService.GetInstitutionFaculties(institutionName);
         return Ok(result);
     }
 
@@ -42,7 +36,7 @@ public class InstitutionController: BaseController<Institution, InstitutionVO>
     [HttpGet("GetInstitutionDepartments")]
     public async Task<ActionResult<List<DepartmentVO>>> GetInstitutionDepartments(string institutionName)
     {
-        var result = await _institutionService.GetInstitutionDepartments(institutionName);
+        var result = await institutionService.GetInstitutionDepartments(institutionName);
         return Ok(result);
     }
 
@@ -56,7 +50,7 @@ public class InstitutionController: BaseController<Institution, InstitutionVO>
     [HttpGet("GetInstitutionSpecialities")]
     public async Task<ActionResult<List<SpecialityVO>>> GetInstitutionSpecialities(string institutionName)
     {
-        var result = await _institutionService.GetInstitutionSpecialities(institutionName);
+        var result = await institutionService.GetInstitutionSpecialities(institutionName);
         return Ok(result);
     }
 
@@ -67,7 +61,7 @@ public class InstitutionController: BaseController<Institution, InstitutionVO>
     [HttpGet("GetMaxDepartmentInstitutions")]
     public async Task<ActionResult<List<InstitutionVO>>> GetMaxDepartmentInstitutions()
     {
-        var result = await _institutionService.GetMaxDepartmentInstitutions();
+        var result = await institutionService.GetMaxDepartmentInstitutions();
         return Ok(result);
     }
 
@@ -80,7 +74,7 @@ public class InstitutionController: BaseController<Institution, InstitutionVO>
     [HttpGet("GetInstitutions")]
     public async Task<ActionResult<List<InstitutionVO>>> GetInstitutions(InstitutionOwnership institutionOwnership, int groupsCount)
     {
-        var result = await _institutionService.GetInstitutions(institutionOwnership, groupsCount);
+        var result = await institutionService.GetInstitutions(institutionOwnership, groupsCount);
         return Ok(result);
     }
 
@@ -95,7 +89,7 @@ public class InstitutionController: BaseController<Institution, InstitutionVO>
         InstitutionOwnership institutionOwnership,
         BuildingOwnership buildingOwnership)
     {
-        var result = await _institutionService.GetFacultiesCountByOwnership(institutionOwnership, buildingOwnership);
+        var result = await institutionService.GetFacultiesCountByOwnership(institutionOwnership, buildingOwnership);
         return Ok(result);
     }
 
@@ -110,7 +104,7 @@ public class InstitutionController: BaseController<Institution, InstitutionVO>
         InstitutionOwnership institutionOwnership,
         BuildingOwnership buildingOwnership)
     {
-        var result = await _institutionService.GetDepartmentsCountByOwnership(institutionOwnership, buildingOwnership);
+        var result = await institutionService.GetDepartmentsCountByOwnership(institutionOwnership, buildingOwnership);
         return Ok(result);
     }
 
@@ -125,7 +119,7 @@ public class InstitutionController: BaseController<Institution, InstitutionVO>
         InstitutionOwnership institutionOwnership,
         BuildingOwnership buildingOwnership)
     {
-        var result = await _institutionService.GetSpecialitiesCountByOwnership(institutionOwnership, buildingOwnership);
+        var result = await institutionService.GetSpecialitiesCountByOwnership(institutionOwnership, buildingOwnership);
         return Ok(result);
     }
 }

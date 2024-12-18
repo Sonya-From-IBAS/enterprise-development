@@ -7,17 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstitutionStatistic.WebApi.Controllers;
 
-public class SpecialityController: BaseController<Speciality, SpecialityVO>
+public class SpecialityController(ISpecialityService specialityService,
+        IRepository<Speciality> specialityRepository, 
+        IMapper mapper) : BaseController<Speciality, SpecialityVO>(specialityRepository, mapper)
 {
-    private ISpecialityService _specialityService;
 
-    public SpecialityController(
-        ISpecialityService specialityService, 
-        IRepository<Speciality> specialityRepository
-        , IMapper mapper) : base(specialityRepository, mapper)
-    {
-        _specialityService = specialityService;
-    }
 
     /// <summary>
     /// Получить топ 5 специальностей
@@ -26,6 +20,6 @@ public class SpecialityController: BaseController<Speciality, SpecialityVO>
     [HttpGet("GetTopFiveSpecialities")]
     public async Task<ActionResult<List<SpecialityVO>>> GetTopFiveSpecialities()
     {
-        return Ok(await _specialityService.GetTopFive());
+        return Ok(await specialityService.GetTopFive());
     }
 }
