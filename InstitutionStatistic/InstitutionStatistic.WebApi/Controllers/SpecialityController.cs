@@ -11,8 +11,6 @@ public class SpecialityController(ISpecialityService specialityService,
         IRepository<Speciality> specialityRepository, 
         IMapper mapper) : BaseController<Speciality, SpecialityVO>(specialityRepository, mapper)
 {
-
-
     /// <summary>
     /// Получить топ 5 специальностей
     /// </summary>

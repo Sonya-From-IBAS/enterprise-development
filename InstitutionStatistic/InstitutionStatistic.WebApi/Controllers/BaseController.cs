@@ -11,7 +11,11 @@ public class BaseController<TEntity, TEntityDTO>(IRepository<TEntity> repository
     where TEntity : class
     where TEntityDTO : class
 {
-
+    /// <summary>
+    /// Записать новый объект в бд
+    /// </summary>
+    /// <param name="entityVO">Новый объект</param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<ActionResult<TEntityDTO>> Create(TEntityDTO entityVO)
     {
@@ -20,6 +24,11 @@ public class BaseController<TEntity, TEntityDTO>(IRepository<TEntity> repository
         return entityVO;
     }
 
+    /// <summary>
+    /// Получить объект из бд по айдишнику
+    /// </summary>
+    /// <param name="id">Айдишник</param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<TEntityDTO>> Read(Guid id)
     {
@@ -31,6 +40,10 @@ public class BaseController<TEntity, TEntityDTO>(IRepository<TEntity> repository
         return Ok(mapper.Map<TEntityDTO>(entity));
     }
 
+    /// <summary>
+    /// Получить все объекты
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<ActionResult<List<TEntityDTO>>> ReadAll()
     {
@@ -42,6 +55,12 @@ public class BaseController<TEntity, TEntityDTO>(IRepository<TEntity> repository
         return Ok(mapper.Map<List<TEntityDTO>>(entity));
     }
 
+    /// <summary>
+    /// Обновить объект в бд
+    /// </summary>
+    /// <param name="id">Айдишник объекта</param>
+    /// <param name="entityVO">Новый объект</param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(Guid id, TEntityDTO entityVO)
     {
@@ -53,6 +72,11 @@ public class BaseController<TEntity, TEntityDTO>(IRepository<TEntity> repository
         return NoContent();
     }
 
+    /// <summary>
+    /// Удалить объект из бд по айдишнику
+    /// </summary>
+    /// <param name="id">Айдишник</param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
