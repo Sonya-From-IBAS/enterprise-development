@@ -14,5 +14,12 @@ public class AppMappingProfile: Profile
         CreateMap<Institution, InstitutionVO>();
         CreateMap<Rector, RectorVO>();
         CreateMap<Speciality, SpecialityVO>();
+
+        CreateMap<DepartmentVO, Department>();
+        CreateMap<FacultyVO, Faculty>();
+        CreateMap<GroupVO, GroupVO>();
+        CreateMap<InstitutionVO, Institution>();
+        CreateMap<RectorVO, Rector>();
+        CreateMap<SpecialityVO, Speciality>();
     }
 }
