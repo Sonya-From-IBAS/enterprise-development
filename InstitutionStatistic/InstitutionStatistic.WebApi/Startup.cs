@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using InstitutionStatistic.Domain.Models;
 using InstitutionStatistic.WebApi.Services;
+using InstitutionStatistic.Domain.Queries;
 namespace InstitutionStatistic.WebApi;
 
 public class Startup(IConfiguration configuration)
@@ -16,13 +17,19 @@ public class Startup(IConfiguration configuration)
             options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
         });
 
+        //маппер
         services.AddAutoMapper(typeof(AppMappingProfile));
-        services.AddScoped<IInstitutionService, InstitutionService>();
-        services.AddScoped<ISpecialityService, SpecialityService>();
+
+        //linq запросы
+        services.AddScoped<IInstitutionQuery, InstitutinQuery>();
+        services.AddScoped<ISpecialityQuery, SpecialityQuery>();
+
+        //репозитории
         services.AddScoped<IRepository<Institution>, Repository<Institution>>();
         services.AddScoped<IRepository<Speciality>, Repository<Speciality>>();
         services.AddScoped<IRepository<Faculty>, Repository<Faculty>>();
         services.AddScoped<IRepository<Department>, Repository<Department>>();
+
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();

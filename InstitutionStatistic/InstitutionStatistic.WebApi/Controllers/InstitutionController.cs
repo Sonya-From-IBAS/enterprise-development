@@ -22,6 +22,19 @@ public class InstitutionController(IRepository<Institution> institutionRepositor
     [HttpGet("GetInstitutionFaculties")]
     public async Task<ActionResult<List<FacultyVO>>> GetInstitutionFaculties(string institutionName)
     {
+        var query = _institutionRepository.Query();
+        var result = await query
+            .Where(x => x.Name == instName)
+            .Include(x => x.Faculties)
+            .SelectMany(x => x.Faculties)
+            .Select(x => new FacultyVO()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Version = x.Version,
+            })
+            .ToListAsync();
+
         var result = await institutionService.GetInstitutionFaculties(institutionName);
         return Ok(result);
     }
@@ -36,6 +49,20 @@ public class InstitutionController(IRepository<Institution> institutionRepositor
     [HttpGet("GetInstitutionDepartments")]
     public async Task<ActionResult<List<DepartmentVO>>> GetInstitutionDepartments(string institutionName)
     {
+        var query = _institutionRepository.Query();
+        var result = await query
+            .Where(x => x.Name == institutionName)
+            .SelectMany(x => x.Faculties)
+            .SelectMany(x => x.Departments)
+            .Select(x => new DepartmentVO()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Version = x.Version,
+            })
+            .ToListAsync();
+
+        return result;
         var result = await institutionService.GetInstitutionDepartments(institutionName);
         return Ok(result);
     }
@@ -50,6 +77,24 @@ public class InstitutionController(IRepository<Institution> institutionRepositor
     [HttpGet("GetInstitutionSpecialities")]
     public async Task<ActionResult<List<SpecialityVO>>> GetInstitutionSpecialities(string institutionName)
     {
+        var query = _institutionRepository.Query();
+        var result = await query
+         .Where(x => x.Name == institutionName)
+         .Include(x => x.Faculties).ThenInclude(x => x.Departments)
+         .SelectMany(x => x.Faculties)
+         .SelectMany(x => x.Departments)
+         .SelectMany(x => x.Groups)
+         .Select(x => x.Speciality)
+         .Distinct()
+         .Select(x => new SpecialityVO()
+         {
+             Id = x.Id,
+             Name = x.Name,
+             Version = x.Version,
+             Code = x.Code
+         })
+         .ToListAsync();
+
         var result = await institutionService.GetInstitutionSpecialities(institutionName);
         return Ok(result);
     }
@@ -74,6 +119,24 @@ public class InstitutionController(IRepository<Institution> institutionRepositor
     [HttpGet("GetInstitutions")]
     public async Task<ActionResult<List<InstitutionVO>>> GetInstitutions(InstitutionOwnership institutionOwnership, int groupsCount)
     {
+        var query = _institutionRepository.Query();
+        var result = await query
+            .Where(x => x.InstitutionOwnership == institutionOwnership)
+            .Include(x => x.Faculties)
+            .ThenInclude(x => x.Departments)
+            .ThenInclude(x => x.Groups)
+            .Where(x => x.Faculties.Sum(y => y.Departments.Sum(z => z.Groups.Count)) == groupsCount)
+            .Select(x => new InstitutionVO()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Version = x.Version,
+                RegistrationNumber = x.RegistrationNumber,
+                Address = x.Address,
+                BuildingOwnership = x.BuildingOwnership,
+                InstitutionOwnership = x.InstitutionOwnership
+            })
+            .ToListAsync();
         var result = await institutionService.GetInstitutions(institutionOwnership, groupsCount);
         return Ok(result);
     }
