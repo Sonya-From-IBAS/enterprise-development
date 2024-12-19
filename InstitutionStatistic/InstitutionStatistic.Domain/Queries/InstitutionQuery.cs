@@ -9,21 +9,15 @@ namespace InstitutionStatistic.Domain.Queries;
 public class InstitutinQuery: GetInfoQuery<Institution>
 {
     /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="repository"></param>
-    public InstitutinQuery(ICollection<Institution> repository): base(repository) {}
-
-    /// <summary>
     /// Вывести информацию о факультетах данного института
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="selector"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public List<Faculty> GetInstitutionFaculties<T>(Func<Institution, T> selector, T value)
+    public List<Faculty> GetInstitutionFaculties<T>(IEnumerable<Institution> collection, Func<Institution, T> selector, T value)
     {
-        return Repository
+        return collection
             .Where(x => selector(x)?.Equals(value) == true)
             .SelectMany(x => x.Faculties)
             .ToList();
@@ -36,9 +30,9 @@ public class InstitutinQuery: GetInfoQuery<Institution>
     /// <param name="selector"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public List<Department> GetInstitutionDepartments<T>(Func<Institution, T> selector, T value)
+    public List<Department> GetInstitutionDepartments<T>(IEnumerable<Institution> collection, Func<Institution, T> selector, T value)
     {
-        return Repository
+        return collection
             .Where(x => selector(x)?.Equals(value) == true)
             .SelectMany(x => x.Faculties)
             .SelectMany(x => x.Departments)
@@ -52,9 +46,9 @@ public class InstitutinQuery: GetInfoQuery<Institution>
     /// <param name="selector"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public List<Speciality> GetInstitutionSpecialities<T>(Func<Institution, T> selector, T value)
+    public List<Speciality> GetInstitutionSpecialities<T>(IEnumerable<Institution> collection, Func<Institution, T> selector, T value)
     {
-        return Repository
+        return collection
             .Where(x => selector(x)?.Equals(value) == true)
             .SelectMany(x => x.Faculties)
             .SelectMany(x => x.Departments)
@@ -68,12 +62,12 @@ public class InstitutinQuery: GetInfoQuery<Institution>
     /// Получить вузы с максимальным кол-ом кафедр, упорядочить по названию
     /// </summary>
     /// <returns></returns>
-    public List<Institution> GetMaxDepartmentInstitutions()
+    public List<Institution> GetMaxDepartmentInstitutions(IEnumerable<Institution> collection)
     {
-        var maxDepartmentsCount = Repository
+        var maxDepartmentsCount = collection
             .Max(x => x.Faculties.Sum(y => y.Departments.Count));
 
-        return Repository
+        return collection
             .Where(x => x.Faculties.Sum(y => y.Departments.Count) == maxDepartmentsCount)
             .OrderBy(x => x.Name)
             .ToList();
@@ -85,9 +79,9 @@ public class InstitutinQuery: GetInfoQuery<Institution>
     /// <param name="institutionOwnership"></param>
     /// <param name="groupsCount"></param>
     /// <returns></returns>
-    public List<Institution> GetInstitutions(InstitutionOwnership institutionOwnership, int groupsCount)
+    public List<Institution> GetInstitutions(IEnumerable<Institution> collection, InstitutionOwnership institutionOwnership, int groupsCount)
     {
-        return Repository
+        return collection
             .Where(x => x.InstitutionOwnership == institutionOwnership)
             .Where(x => x.Faculties.Sum(y => y.Departments.Sum(z => z.Groups.Count)) == groupsCount)
             .ToList();
@@ -100,10 +94,11 @@ public class InstitutinQuery: GetInfoQuery<Institution>
     /// <param name="buildingOwnership"></param>
     /// <returns></returns>
     public int GetFacultiesCountByOwnership(
+        IEnumerable<Institution> collection,
         InstitutionOwnership institutionOwnership,
         BuildingOwnership buildingOwnership)
     {
-        return Repository
+        return collection
             .Where(x => x.InstitutionOwnership == institutionOwnership)
             .Where(x => x.BuildingOwnership == buildingOwnership)
             .Sum(x => x.Faculties.Count);
@@ -116,10 +111,11 @@ public class InstitutinQuery: GetInfoQuery<Institution>
     /// <param name="buildingOwnership"></param>
     /// <returns></returns>
     public int GetDepartmentsCountByOwnership(
+        IEnumerable<Institution> collection,
         InstitutionOwnership institutionOwnership,
         BuildingOwnership buildingOwnership)
     {
-        return Repository
+        return collection
              .Where(x => x.InstitutionOwnership == institutionOwnership)
              .Where(x => x.BuildingOwnership == buildingOwnership)
              .Sum(x => x.Faculties.Sum(y => y.Departments.Count));
@@ -132,10 +128,11 @@ public class InstitutinQuery: GetInfoQuery<Institution>
     /// <param name="buildingOwnership"></param>
     /// <returns></returns>
     public int GetSpecialitiesCountByOwnership(
+        IEnumerable<Institution> collection,
         InstitutionOwnership institutionOwnership,
         BuildingOwnership buildingOwnership)
     {
-        return Repository
+        return collection
             .Where(x => x.InstitutionOwnership == institutionOwnership)
             .Where(x => x.BuildingOwnership == buildingOwnership)
             .SelectMany(x => x.Faculties)

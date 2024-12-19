@@ -9,7 +9,8 @@ namespace InstitutionStatistic.Domain.Test;
 /// </summary>
 public class InstitutionQueriesTests(TestBase testBase) : IClassFixture<TestBase>
 {
-    private InstitutinQuery _institutinQuery = new InstitutinQuery(testBase.Institutions);
+    private InstitutinQuery _institutinQuery = new InstitutinQuery();
+    private IEnumerable<Institution> collection = testBase.Institutions;
     private TestBase _testBase = testBase;
 
     #region Вывести информацию о выбранном вузе
@@ -20,9 +21,9 @@ public class InstitutionQueriesTests(TestBase testBase) : IClassFixture<TestBase
         var pguty = "ПГУТИ";
         var notExisted = "notExisted";
 
-        Assert.Equal(_institutinQuery.GetByName(ssau), _testBase.Institutions[0]);
-        Assert.Equal(_institutinQuery.GetByName(pguty), _testBase.Institutions[2]);
-        Assert.Null(_institutinQuery.GetByName(notExisted));
+        Assert.Equal(_institutinQuery.GetByName(collection, ssau), _testBase.Institutions[0]);
+        Assert.Equal(_institutinQuery.GetByName(collection, pguty), _testBase.Institutions[2]);
+        Assert.Null(_institutinQuery.GetByName(collection, notExisted));
     }
     #endregion
 
@@ -33,7 +34,7 @@ public class InstitutionQueriesTests(TestBase testBase) : IClassFixture<TestBase
     public void GetInstitutionFacultiesTest(string name, string[] expected)
     {
         Assert.Equal(
-            _institutinQuery.GetInstitutionFaculties(x => x.Name, name).Select(x => x.Name).ToList(),
+            _institutinQuery.GetInstitutionFaculties(collection, x => x.Name, name).Select(x => x.Name).ToList(),
             expected);
     }
 
@@ -43,7 +44,7 @@ public class InstitutionQueriesTests(TestBase testBase) : IClassFixture<TestBase
     public void GetInstitutionSpecialitiesTest(string name, string[] expected)
     {
         Assert.Equal(
-            _institutinQuery.GetInstitutionSpecialities(x => x.Name, name).Select(x => x.Name).ToList(),
+            _institutinQuery.GetInstitutionSpecialities(collection, x => x.Name, name).Select(x => x.Name).ToList(),
             expected);
     }
 
@@ -53,7 +54,7 @@ public class InstitutionQueriesTests(TestBase testBase) : IClassFixture<TestBase
     public void GetInstitutionDepartmentsTest(string name, string[] expected)
     {
         Assert.Equal(
-            _institutinQuery.GetInstitutionDepartments(x => x.Name, name).Select(x => x.Name).ToList(),
+            _institutinQuery.GetInstitutionDepartments(collection, x => x.Name, name).Select(x => x.Name).ToList(),
             expected);
     }
     #endregion
@@ -63,7 +64,7 @@ public class InstitutionQueriesTests(TestBase testBase) : IClassFixture<TestBase
     public void GetMaxDepartmentInstitutionsTest()
     {
         Assert.Equal(
-            _institutinQuery.GetMaxDepartmentInstitutions().Select(x => x.Name).ToList(),
+            _institutinQuery.GetMaxDepartmentInstitutions(collection).Select(x => x.Name).ToList(),
             new List<string> { "ПГУТИ", "СГАУ" });
     }
     #endregion
@@ -73,7 +74,7 @@ public class InstitutionQueriesTests(TestBase testBase) : IClassFixture<TestBase
     public void GetInstitutionsTest()
     {
         Assert.Equal(
-            _institutinQuery.GetInstitutions(InstitutionOwnership.Municipality, 5).Select(x => x.Name).ToList(),
+            _institutinQuery.GetInstitutions(collection, InstitutionOwnership.Municipality, 5).Select(x => x.Name).ToList(),
             new List<string> { "САМГТУ"});
     }
     #endregion
@@ -84,7 +85,7 @@ public class InstitutionQueriesTests(TestBase testBase) : IClassFixture<TestBase
     [InlineData(InstitutionOwnership.Municipality, BuildingOwnership.Federal, 2)]
     public void GetFacultiesCountByOwnershipTest(InstitutionOwnership institutionOwnership, BuildingOwnership buildingOwnership, int expectedResult)
     {
-        Assert.Equal(_institutinQuery.GetFacultiesCountByOwnership(institutionOwnership, buildingOwnership), expectedResult);
+        Assert.Equal(_institutinQuery.GetFacultiesCountByOwnership(collection, institutionOwnership, buildingOwnership), expectedResult);
     }
 
     [Theory]
@@ -92,7 +93,7 @@ public class InstitutionQueriesTests(TestBase testBase) : IClassFixture<TestBase
     [InlineData(InstitutionOwnership.Personal, BuildingOwnership.Federal, 1)]
     public void GetDepartmentsCountByOwnershipTest(InstitutionOwnership institutionOwnership, BuildingOwnership buildingOwnership, int expectedResult)
     {
-        Assert.Equal(_institutinQuery.GetDepartmentsCountByOwnership(institutionOwnership, buildingOwnership), expectedResult);
+        Assert.Equal(_institutinQuery.GetDepartmentsCountByOwnership(collection, institutionOwnership, buildingOwnership), expectedResult);
     }
 
     [Theory]
@@ -100,7 +101,7 @@ public class InstitutionQueriesTests(TestBase testBase) : IClassFixture<TestBase
     [InlineData(InstitutionOwnership.Municipality, BuildingOwnership.Municipality, 4)]
     public void GetSpecialitiesCountByOwnershipTest(InstitutionOwnership institutionOwnership, BuildingOwnership buildingOwnership, int expectedResult)
     {
-        Assert.Equal(_institutinQuery.GetSpecialitiesCountByOwnership(institutionOwnership, buildingOwnership), expectedResult);
+        Assert.Equal(_institutinQuery.GetSpecialitiesCountByOwnership(collection, institutionOwnership, buildingOwnership), expectedResult);
     }
     #endregion
 }

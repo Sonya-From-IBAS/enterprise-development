@@ -5,17 +5,18 @@ namespace InstitutionStatistic.Domain.Queries;
 /// <summary>
 /// Универсальный класс запросов сущнсотей, наследуемых от EntityWithName
 /// </summary>
-public abstract class GetInfoQuery<TEntity>: GetSimpleInfoQuery<TEntity> where TEntity : EntityWithName
+public abstract class GetInfoQuery<TEntity> where TEntity : EntityWithName
 {
     /// <summary>
-    /// ctor
+    /// Получить сущность по id
     /// </summary>
-    /// <param name="repository"></param>
-    public GetInfoQuery(ICollection<TEntity> repository): base(repository) { }
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public TEntity? GetById(IEnumerable<TEntity> collection, Guid id) => collection.Where(x => x.Id == id).FirstOrDefault();
 
     /// <summary>
     /// Получить сущность по имени
     /// </summary>
     /// <param name="name"></param>
-    public TEntity? GetByName(string name) => Repository.Where(x => x.Name == name).FirstOrDefault();
+    public TEntity? GetByName(IEnumerable<TEntity> collection, string name) => collection.Where(x => x.Name == name).FirstOrDefault();
 }

@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InstitutionStatistic.Domain\InstitutionStatistic.Domain.csproj" />
-    <ProjectReference Include="..\InstitutionStatistic.Query\InstitutionStatistic.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
