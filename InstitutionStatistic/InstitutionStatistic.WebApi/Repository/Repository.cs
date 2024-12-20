@@ -2,16 +2,9 @@
 
 namespace InstitutionStatistic.WebApi.Repository;
 
-public class Repository<TEntity>: IRepository<TEntity> where TEntity : class
+public class Repository<TEntity>(InstitutionDbContext context) : IRepository<TEntity> where TEntity : class
 {
-    private readonly InstitutionDbContext _context;
-    private readonly DbSet<TEntity> _dbSet;
-    public Repository(InstitutionDbContext context)
-    {
-        _context = context;
-        _dbSet = context.Set<TEntity>();
-    }
-
+    private readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
     public IQueryable<TEntity> Query()
     {
         return _dbSet.AsQueryable();
@@ -20,7 +13,7 @@ public class Repository<TEntity>: IRepository<TEntity> where TEntity : class
     public async Task AddAsync(TEntity entity)
     {
         await _dbSet.AddAsync(entity);
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(Guid id)
@@ -29,7 +22,7 @@ public class Repository<TEntity>: IRepository<TEntity> where TEntity : class
         if (entity != null)
         {
             _dbSet.Remove(entity);
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
     }
 
@@ -51,6 +44,6 @@ public class Repository<TEntity>: IRepository<TEntity> where TEntity : class
     public async Task UpdateAsync(TEntity entity)
     {
         _dbSet.Update(entity);
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 }
