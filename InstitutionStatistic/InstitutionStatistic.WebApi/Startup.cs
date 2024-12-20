@@ -1,9 +1,9 @@
-﻿using InstitutionStatistic.WebApi.Repository;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore;
-using InstitutionStatistic.Domain.Models;
-using InstitutionStatistic.WebApi.Services;
+﻿using InstitutionStatistic.Domain.Models;
 using InstitutionStatistic.Domain.Queries;
+using InstitutionStatistic.WebApi.Repository;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using System.Text.Json.Serialization;
 namespace InstitutionStatistic.WebApi;
 
 public class Startup(IConfiguration configuration)
@@ -30,7 +30,11 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<IRepository<Faculty>, Repository<Faculty>>();
         services.AddScoped<IRepository<Department>, Repository<Department>>();
 
-        services.AddControllers();
+        services.AddControllers()
+        .AddJsonOptions(opt =>
+        {
+                opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        });
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
     }
